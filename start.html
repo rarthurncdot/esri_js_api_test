@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <title>ArcGIS API for JavaScript Tutorials: Display a map</title>
+
+        <style>
+            html,
+            body,
+            #viewDiv {
+              padding: 0;
+              margin: 0;
+              height: 100%;
+              width: 100%;
+            }
+          </style>
+          <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css">
+          <script src="https://js.arcgis.com/4.19/"></script>
+
+          <script>
+              require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/Locate"], function (esriConfig, Map, MapView, Locate)
+              {
+                  esriConfig.apiKey = "AAPK5c1fd8ea23484507b69c598c20981676AvdenWLe5UbkQtJlnlFzjl1VCQQIcFIPSakif2YQ-3Ei0Ue18Jyfr62yvdyRJ4U3";
+                  
+                  const map = new Map({
+                      basemap: "arcgis-topographic"
+                  });
+                  
+                  const view = new MapView ({
+                      map: map,
+                      center: [-118.805, 34.027],
+                      zoom: 13,
+                      container: "viewDiv",
+                      constraints: {
+                          snapToZoom: false
+                      }
+                  });
+                  
+                  const locate = new Locate ({
+                      view: view,
+                      userHeadingEnabled: false,
+                      goToOverride: function(view, options) {
+                          options.target.scale = 1500;
+                          return view.goTo(options.target);
+                      }
+                  });
+                  view.ui.add(locate, "top-right");
+
+              });
+            </script>
+    </head>
+    <body>
+        <div id="viewDiv"></div>
+    </body>
+</html>
